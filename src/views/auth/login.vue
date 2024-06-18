@@ -1,12 +1,63 @@
 <script setup>
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter()
+import api from '../../services/api'
+import Cookies from 'js-cookie';
+const user = reactive({
+    email: '',
+    password: ''
+})
+const validation = ref([])
+const loginFailed = ref([])
+const login = async () => {
+    await api.post('/api/login', {
+        email: user.email,
+        password: user.password
+    }).then(response => {
+        Cookies.set('token', response.data.data.token)
+        Cookies.set('user', JSON.stringify(response.data.data.user))
 
+        if (Cookies.get('token')) {
+            router.push({ name: 'dashboard' })
+        }
+    }).catch(error => {
+        validation.value = error.response.data
+        loginFailed.value = error.response.data
+    })
+}
 </script>
 
 <template>
-    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
-        <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold">LOGIN O NDES</h1>
-            <p class="col-md-12 fs-4">Nek pengen mlebu login o sek</p>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4">
+            <div class="card border-0 rounded shadow-sm">
+                <div class="card-body">
+                    <h4>LOGIN O CUKK</h4>
+                    <hr />
+                    <div v-if="validation.errors" class="mt-2 alert alert-danger">
+                        <ul class="mt-0 mb-0">
+                            <li v-for="(error, index) in validation.errors" :key="index">
+                                {{ `${error.path} : ${error.msg}` }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-if="loginFailed.message" class="mt-2 alert alert-danger">
+                        {{ loginFailed.message }}
+                    </div>
+                    <form @submit.prevent="login">
+                        <div class="form-group mb-3">
+                            <label for="" class="mb-1 fw-bold">Email</label>
+                            <input type="email" v-model="user.email" class="form-control" placeholder="Email"/>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="" class="mb-1 fw-bold">Password</label>
+                            <input type="password" v-model="user.password" class="form-control" placeholder="Password"/>
+                        </div>
+                        <button class="btn btn-primary w-100">LOGIN SEK NDES</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </template>
