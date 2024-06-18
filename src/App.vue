@@ -6,7 +6,7 @@
   <div>
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
       <div class="container">
-        <router-link :to="{ name: 'home' }" class="navbar-brand">HOME</router-link>
+        <router-link :to="{ name: 'home' }" class="navbar-brand">OMAH</router-link>
         <button
           class="navbar-toggler"
           type="button"
@@ -18,13 +18,13 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a href="https://santrikoding.com" target="_blank" class="nav-link active" aria-current="page">SANTRIKODING.COM</a>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </nav>
 
