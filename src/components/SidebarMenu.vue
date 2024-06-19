@@ -1,4 +1,12 @@
 <script setup>
+import { useRoute } from 'vue-router';
+const router = useRoute()
+import Cookies from 'js-cookie';
+const logout = () => {
+    Cookies.remove('token')
+    Cookies.remove('user')
+    router.push({name:'login'})
+}
 </script>
 
 <template>
@@ -9,7 +17,7 @@
         <div class="list-group">
             <router-link :to="{name: 'dashboard'}" class="list-group-item list-group-item-action">DASHBOARD</router-link>
             <a href="#" class="list-group-item list-group-item-action">Users</a>
-            <a href="#" class="list-group-item list-group-item-action">Logout</a>
+            <a href="#" @click="logout" class="list-group-item list-group-item-action">Logout</a>
         </div>
     </div>
 </template>
