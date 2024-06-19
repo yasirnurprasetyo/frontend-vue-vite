@@ -16,7 +16,7 @@ const logout = () => {
     <div class="card-body">
         <div class="list-group">
             <router-link :to="{name: 'dashboard'}" class="list-group-item list-group-item-action">DASHBOARD</router-link>
-            <a href="#" class="list-group-item list-group-item-action">Users</a>
+            <router-link :to="{name: 'admin.users.index'}" class="list-group-item list-group-item-action">USER</router-link>
             <a href="#" @click="logout" class="list-group-item list-group-item-action">Logout</a>
         </div>
     </div>

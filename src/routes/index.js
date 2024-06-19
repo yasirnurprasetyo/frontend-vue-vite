@@ -20,6 +20,21 @@ const routes = [
         name: 'dashboard',
         component: () => import('../views/admin/dashboard/index.vue'),
         meta: { requiresAuth: true}
+    },{
+        path: '/admin/users',
+        name: 'admin.users.index',
+        component: () => import('../views/admin/users/index.vue'),
+        meta: {requiresAuth: true}
+    },{
+        path: '/admin/users/create',
+        name: 'admin.users.create',
+        component: () => import('../views/admin/users/create.vue'),
+        meta: {requiresAuth: true}
+    },{
+        path: '/admin/users/edit',
+        name: 'admin.users.edit',
+        component: () => import('../views/admin/users/edit.vue'),
+        meta: {requiresAuth: true}
     }
 ]
 
