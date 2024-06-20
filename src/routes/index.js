@@ -31,7 +31,7 @@ const routes = [
         component: () => import('../views/admin/users/create.vue'),
         meta: {requiresAuth: true}
     },{
-        path: '/admin/users/edit',
+        path: '/admin/users/:id',
         name: 'admin.users.edit',
         component: () => import('../views/admin/users/edit.vue'),
         meta: {requiresAuth: true}
