@@ -26,7 +26,7 @@ onMounted(() => {
                 <div class="card border-0 rounded shadow-sm">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>USERS</span>
-                        <router-link class="btn btn-sm btn-sccess roundeed shadow-sm border-0">ADD USER</router-link>
+                        <router-link :to="{ name: 'admin.users.create' }" class="btn btn-sm btn-sccess roundeed shadow-sm border-0">ADD USER</router-link>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered table-striped">

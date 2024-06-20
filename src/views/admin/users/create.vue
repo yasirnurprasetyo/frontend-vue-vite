@@ -1,19 +1,67 @@
 <script setup>
 import SidebarMenu from '../../../components/SidebarMenu.vue'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router';
+const router = useRouter()
+import Cookies from 'js-cookie';
+import api from '../../../services/api'
+const token = Cookies.get('token')
+const user = reactive({
+    name: '',
+    email: '',
+    password: ''
+})
+const validation = ref([])
+const storeUser = async () => {
+    api.defaults.headers.common['Authorization'] = token
+    await api.post('/api/admin/users', {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+    }).then(() => {
+        router.push({
+            name: 'admin.users.index'
+        })
+    }).catch(errror => {
+        validation.value = errror.response.data
+    })
+}
+
 </script>
+
 <template>
-    <div class="container-mt-5 mb-5">
+    <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-3">
-                <SidebarMenu/>
+                <SidebarMenu />
             </div>
             <div class="col-md-9">
-                <div class="card card-border rounded shadow-sm">
+                <div class="card card-0 rounded shadow-sm">
                     <div class="card-header">
-                        DASHBOARD
+                        Add User
                     </div>
                     <div class="card-body">
-                        HALAMAN USER CREATE
+                        <div v-if="validation.errors" class="mt-2 alert alert-danger">
+                            <ul class="mt-0 mb-0">
+                                <li v-for="(error, index) in validation.errors" :key="index" >{{ `${error.path} : ${error.msg}` }}</li>
+                            </ul>
+                        </div>
+                        <form @submit.prevent="storeUser">
+                            <div class="form-group mb-3">
+                                <label for="" class="mb-1 fw-bold">Jeneng Dowo</label>
+                                <input type="text" v-model="user.name" class="form-control" placeholder="Jeneng Dowo" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="" class="mb-1 fw-bold">Email</label>
+                                <input type="email" v-model="user.email" class="form-control" placeholder="Email" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="" class="mb-1 fw-bold">Password</label>
+                                <input type="password" v-model="user.password" class="form-control"
+                                    placeholder="Password" />
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">SIMPEN</button>
+                        </form>
                     </div>
                 </div>
             </div>
